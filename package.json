@@ -1,0 +1,34 @@
+{
+  "name": "at-the-race",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AT THE RACE — Professional Race Predictions Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm run dev --workspace=@atr/api",
+    "dev:web": "npm run dev --workspace=@atr/web",
+    "build": "npm run build --workspaces --if-present",
+    "build:firebase": "node scripts/generate-firebase-config.mjs",
+    "deploy:firebase": "npm run build:firebase && firebase deploy",
+    "deploy:firebase:hosting": "npm run build:firebase && firebase deploy --only hosting",
+    "deploy:firebase:rules": "firebase deploy --only database,firestore,storage",
+    "start": "npm run start --workspace=@atr/api",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "db:migrate": "npm run migrate --workspace=@atr/api",
+    "create-admin": "npm run create-admin --workspace=@atr/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "firebase-tools": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

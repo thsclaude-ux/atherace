@@ -1,0 +1,11 @@
+node_modules/
+.netlify/
+.env
+.env.*
+!.env.example
+public/js/firebase-config.local.js
+public/js/firebase-config.generated.js
+*-firebase-adminsdk-*.json
+.firebase/
+scripts/test-participants-export.xlsx
+functions/.env

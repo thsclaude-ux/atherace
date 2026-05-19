@@ -1,0 +1,112 @@
+/**
+ * AT THE RACE — Design Tokens
+ * Brand: Horse racing · Speed · Luxury · Competition
+ */
+
+:root {
+  /* ── Primary Palette ── */
+  --atr-navy-950: #060D18;
+  --atr-navy-900: #0A1628;
+  --atr-navy-800: #0D2137;
+  --atr-navy-700: #122A45;
+  --atr-navy-600: #1A3A5C;
+  --atr-navy-500: #234B73;
+
+  --atr-gold-600: #B8962E;
+  --atr-gold-500: #D4AF37;
+  --atr-gold-400: #E8C547;
+  --atr-gold-300: #F0D875;
+
+  --atr-white: #FFFFFF;
+  --atr-off-white: #F4F6F9;
+
+  /* ── Accent Colors (Jockey Silks) ── */
+  --atr-racing-green: #006B3F;
+  --atr-racing-red: #C41E3A;
+  --atr-racing-orange: #E8651A;
+  --atr-racing-purple: #6B2D8B;
+  --atr-dirt: #8B6914;
+  --atr-dirt-light: #C4A35A;
+
+  /* ── Semantic ── */
+  --atr-success: #22C55E;
+  --atr-success-bg: rgba(34, 197, 94, 0.12);
+  --atr-error: #EF4444;
+  --atr-error-bg: rgba(239, 68, 68, 0.12);
+  --atr-warning: #F59E0B;
+  --atr-warning-bg: rgba(245, 158, 11, 0.12);
+  --atr-info: #3B82F6;
+  --atr-info-bg: rgba(59, 130, 246, 0.12);
+
+  /* ── Dark Mode (Default) ── */
+  --atr-bg: var(--atr-navy-950);
+  --atr-bg-elevated: var(--atr-navy-900);
+  --atr-surface: rgba(13, 33, 55, 0.72);
+  --atr-surface-solid: var(--atr-navy-800);
+  --atr-surface-hover: rgba(26, 58, 92, 0.6);
+  --atr-border: rgba(212, 175, 55, 0.15);
+  --atr-border-strong: rgba(212, 175, 55, 0.35);
+  --atr-text: #E8EDF4;
+  --atr-text-muted: #8B9CB3;
+  --atr-text-subtle: #5A6B7D;
+  --atr-primary: var(--atr-gold-500);
+  --atr-primary-hover: var(--atr-gold-400);
+  --atr-primary-text: var(--atr-navy-950);
+
+  /* ── Glassmorphism ── */
+  --atr-glass-bg: rgba(10, 22, 40, 0.65);
+  --atr-glass-border: rgba(212, 175, 55, 0.12);
+  --atr-glass-blur: 16px;
+
+  /* ── Typography ── */
+  --atr-font-en: "Inter", system-ui, sans-serif;
+  --atr-font-en-display: "Barlow Condensed", "Inter", sans-serif;
+  --atr-font-ar: "Tajawal", "IBM Plex Sans Arabic", sans-serif;
+
+  /* ── Spacing ── */
+  --atr-space-xs: 0.25rem;
+  --atr-space-sm: 0.5rem;
+  --atr-space-md: 1rem;
+  --atr-space-lg: 1.5rem;
+  --atr-space-xl: 2rem;
+  --atr-space-2xl: 3rem;
+  --atr-space-3xl: 4rem;
+
+  /* ── Radius ── */
+  --atr-radius-sm: 6px;
+  --atr-radius-md: 10px;
+  --atr-radius-lg: 16px;
+  --atr-radius-xl: 24px;
+  --atr-radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --atr-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --atr-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --atr-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --atr-shadow-gold: 0 0 24px rgba(212, 175, 55, 0.15);
+
+  /* ── Motion ── */
+  --atr-transition-fast: 150ms ease;
+  --atr-transition-base: 250ms ease;
+  --atr-transition-slow: 400ms ease;
+
+  /* ── Z-index ── */
+  --atr-z-dropdown: 100;
+  --atr-z-modal: 200;
+  --atr-z-toast: 300;
+}
+
+[data-theme="light"] {
+  --atr-bg: var(--atr-off-white);
+  --atr-bg-elevated: var(--atr-white);
+  --atr-surface: rgba(255, 255, 255, 0.85);
+  --atr-surface-solid: var(--atr-white);
+  --atr-surface-hover: rgba(10, 22, 40, 0.04);
+  --atr-border: rgba(10, 22, 40, 0.1);
+  --atr-border-strong: rgba(10, 22, 40, 0.2);
+  --atr-text: var(--atr-navy-900);
+  --atr-text-muted: #5A6B7D;
+  --atr-text-subtle: #8B9CB3;
+  --atr-glass-bg: rgba(255, 255, 255, 0.75);
+  --atr-glass-border: rgba(10, 22, 40, 0.08);
+}

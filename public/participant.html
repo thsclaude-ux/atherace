@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ترشيحات السباق</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body data-page="participant">
+  <header class="header">
+    <div class="container header-inner">
+      <h1 data-i18n="participantTitle">ترشيحات السباق</h1>
+      <div class="header-actions">
+        <button type="button" id="lang-toggle" class="btn btn-ghost btn-sm" data-i18n="lang">EN</button>
+        <button type="button" id="show-ranking-btn" class="btn btn-ghost" data-i18n="viewRanking">عرض الترتيب</button>
+        <a href="/" class="btn btn-ghost">المسؤول</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <section id="code-section" class="card">
+      <h2 data-i18n="accessCode">رمز الوصول</h2>
+      <p class="hint">أدخل الكود الذي حصلت عليه للمشاركة.</p>
+      <form id="code-form" novalidate>
+        <label class="field">
+          <span data-i18n="accessCode">رمز الوصول</span>
+          <input
+            type="text"
+            id="access-code"
+            maxlength="12"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            placeholder="XXXXXXXX"
+          />
+        </label>
+        <button type="submit" class="btn btn-primary" id="validate-btn" data-i18n="validateCode">تحقق من الكود</button>
+        <p id="code-message" class="form-message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="bets-section" class="card hidden">
+      <h2>ترشيحاتي</h2>
+      <p class="hint">اختر رقم الخيل (1–10) لكل شوط من الأشواط السبعة.</p>
+      <p id="code-badge" class="code-badge"></p>
+      <div class="wizard-steps" id="wizard-steps" aria-hidden="true"></div>
+      <form id="bets-form" novalidate>
+        <label class="field">
+          <span data-i18n="phone">رقم الهاتف (اختياري)</span>
+          <input type="tel" id="user-phone" maxlength="20" autocomplete="tel" />
+        </label>
+        <label class="field">
+          <span data-i18n="optionalName">الاسم (اختياري)</span>
+          <input type="text" id="user-name" maxlength="80" autocomplete="name" />
+        </label>
+        <section class="rounds-grid" id="rounds-container"></section>
+        <label class="field checkbox-field consent-field hidden" id="consent-field">
+          <input type="checkbox" id="privacy-consent" required />
+          <span>
+            <span data-i18n="privacyConsent">أوافق على</span>
+            <a href="/privacy.html" target="_blank" rel="noopener" data-i18n="privacyLink">سياسة الخصوصية</a>
+          </span>
+        </label>
+        <div class="wizard-nav">
+          <button type="button" id="prev-round-btn" class="btn btn-ghost hidden">السابق</button>
+          <button type="button" id="next-round-btn" class="btn btn-primary">التالي</button>
+          <button type="submit" id="submit-bets-btn" class="btn btn-primary hidden" data-i18n="submitBets">إرسال ترشيحاتي</button>
+        </div>
+        <p id="bets-message" class="form-message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="success-section" class="card hidden">
+      <h2>تم</h2>
+      <p class="form-message success" data-i18n="successSubmit">تم حفظ ترشيحاتك بنجاح</p>
+      <button type="button" class="btn btn-primary" id="goto-ranking-btn" data-i18n="viewRanking">عرض الترتيب</button>
+    </section>
+
+    <section id="already-section" class="card hidden">
+      <h2 data-i18n="alreadySubmitted">تم التقديم مسبقاً</h2>
+      <button type="button" class="btn btn-ghost" id="already-ranking-btn" data-i18n="viewRanking">عرض الترتيب</button>
+    </section>
+
+    <section id="ranking-section" class="card hidden">
+      <h2 data-i18n="rankingTitle">الترتيب والنتائج</h2>
+      <p id="winners-display" class="hint"></p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th data-i18n="rank">الترتيب</th>
+              <th data-i18n="name">الاسم</th>
+              <th data-i18n="score">النقاط</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-body"></tbody>
+        </table>
+      </div>
+      <button type="button" id="back-to-form-btn" class="btn btn-ghost">العودة</button>
+    </section>
+  </main>
+
+  <script type="module" src="/js/participant.js"></script>
+</body>
+</html>

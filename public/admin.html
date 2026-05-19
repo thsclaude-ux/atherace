@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة المسؤول</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <h1>لوحة المسؤول</h1>
+      <div class="header-actions">
+        <span id="admin-role-badge" class="role-badge hidden" aria-live="polite"></span>
+        <a href="/print-results.html" class="btn btn-ghost" target="_blank" rel="noopener">طباعة النتائج</a>
+        <a href="/" class="btn btn-ghost">الرئيسية</a>
+        <button type="button" id="logout-btn" class="btn btn-ghost hidden">تسجيل الخروج</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <section id="login-section" class="card">
+      <h2>دخول المسؤول</h2>
+      <p class="hint">تسجيل الدخول عبر Firebase Authentication فقط. جميع العمليات تمر عبر Netlify Functions.</p>
+      <form id="login-form">
+        <label class="field">
+          <span>البريد الإلكتروني</span>
+          <input type="email" id="admin-email" required autocomplete="username" />
+        </label>
+        <label class="field">
+          <span>كلمة المرور</span>
+          <input type="password" id="admin-password" required autocomplete="current-password" />
+        </label>
+        <button type="submit" class="btn btn-primary">دخول</button>
+        <p id="login-message" class="form-message hidden" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="dashboard-section" class="hidden">
+      <p id="demo-banner" class="demo-banner hidden" role="status">وضع الاختبار مفعّل — البيانات معزولة ولا تؤثر على السباق الحقيقي</p>
+      <p id="readonly-notice" class="readonly-notice hidden" role="status">صلاحية القراءة فقط — لا يمكنك تعديل البيانات</p>
+
+      <nav class="tabs" role="tablist" aria-label="أقسام لوحة التحكم">
+        <button type="button" class="tab-btn active" role="tab" data-tab="winners" aria-selected="true">نتائج الأشواط</button>
+        <button type="button" class="tab-btn" role="tab" data-tab="generate" aria-selected="false">توليد أكواد</button>
+        <button type="button" class="tab-btn" role="tab" data-tab="codes" aria-selected="false">إدارة الأكواد</button>
+        <button type="button" class="tab-btn" role="tab" data-tab="participants" aria-selected="false">المشاركون</button>
+        <button type="button" class="tab-btn" role="tab" data-tab="settings" aria-selected="false">الإعدادات</button>
+      </nav>
+
+      <!-- Tab 1: Winners -->
+      <div id="tab-winners" class="tab-panel card" role="tabpanel">
+        <h2>نتائج الأشواط الفائزة</h2>
+        <p class="hint">أدخل رقم الفائز لكل شوط (7 أشواط).</p>
+        <p id="winners-saved-meta" class="hint hidden" aria-live="polite"></p>
+        <form id="winners-form" class="winners-grid">
+          <label class="field">
+            <span>الشوط 1</span>
+            <input type="number" id="winner-1" required step="1" />
+          </label>
+          <label class="field">
+            <span>الشوط 2</span>
+            <input type="number" id="winner-2" required step="1" />
+          </label>
+          <label class="field">
+            <span>الشوط 3</span>
+            <input type="number" id="winner-3" required step="1" />
+          </label>
+          <label class="field">
+            <span>الشوط 4</span>
+            <input type="number" id="winner-4" required step="1" />
+          </label>
+          <label class="field">
+            <span>الشوط 5</span>
+            <input type="number" id="winner-5" required step="1" />
+          </label>
+          <label class="field">
+            <span>الشوط 6</span>
+            <input type="number" id="winner-6" required step="1" />
+          </label>
+          <label class="field">
+            <span>الشوط 7</span>
+            <input type="number" id="winner-7" required step="1" />
+          </label>
+        </form>
+        <button type="button" id="save-winners-btn" class="btn btn-primary">حفظ النتائج</button>
+      </div>
+
+      <!-- Tab 2: Generate codes -->
+      <div id="tab-generate" class="tab-panel card hidden" role="tabpanel">
+        <h2>توليد كود جديد</h2>
+        <label class="field">
+          <span>عدد المحاولات المتاحة للكود</span>
+          <input type="number" id="remaining-uses" min="1" max="1000" value="1" required />
+        </label>
+        <button type="button" id="generate-code-btn" class="btn btn-primary">إنشاء كود</button>
+        <div id="generated-code-box" class="generated-code hidden">
+          <span class="generated-code-label">الكود الجديد:</span>
+          <code id="generated-code-value"></code>
+        </div>
+      </div>
+
+      <!-- Tab 3: Codes management -->
+      <div id="tab-codes" class="tab-panel card hidden" role="tabpanel">
+        <div class="panel-header">
+          <h2>إدارة الأكواد</h2>
+          <button type="button" id="refresh-codes-btn" class="btn btn-ghost btn-sm">تحديث</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الكود</th>
+                <th>المحاولات الكلية</th>
+                <th>المستخدم</th>
+                <th>المتبقي</th>
+                <th>تاريخ الإنشاء</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="codes-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Participants -->
+      <div id="tab-participants" class="tab-panel card hidden" role="tabpanel">
+        <div class="panel-header">
+          <h2>المشاركون</h2>
+          <div class="panel-actions">
+            <button type="button" id="export-excel-btn" class="btn btn-ghost btn-sm">📥 تصدير Excel</button>
+            <a href="/print-results.html" class="btn btn-ghost btn-sm" target="_blank" rel="noopener">طباعة</a>
+            <button type="button" id="refresh-participants-btn" class="btn btn-ghost btn-sm">تحديث</button>
+            <button type="button" id="clear-all-participants-btn" class="btn btn-danger btn-sm">مسح الكل</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>المشارك</th>
+                <th>التوقعات</th>
+                <th>النقاط</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="participants-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 5: Settings -->
+      <div id="tab-settings" class="tab-panel card hidden" role="tabpanel">
+        <h2>إعدادات النظام</h2>
+        <p class="hint">تغيير الإعدادات يتطلب صلاحية مسؤول رئيسي.</p>
+        <div class="settings-row">
+          <div>
+            <strong>وضع الاختبار (Demo)</strong>
+            <p class="hint" style="margin:0.25rem 0 0;">عند التفعيل تُخزَّن البيانات في مسار منفصل ولا تُمسح تلقائياً بـ «مسح الكل».</p>
+          </div>
+          <label class="toggle-field">
+            <input type="checkbox" id="demo-mode-toggle" />
+            <span>مفعّل</span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <div>
+            <strong>فتح التسجيل</strong>
+            <p class="hint" style="margin:0.25rem 0 0;">السماح للمستخدمين بإرسال ترشيحات جديدة.</p>
+          </div>
+          <label class="toggle-field">
+            <input type="checkbox" id="submissions-open-toggle" checked />
+            <span>مفتوح</span>
+          </label>
+        </div>
+        <button type="button" id="save-settings-btn" class="btn btn-primary">حفظ الإعدادات</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

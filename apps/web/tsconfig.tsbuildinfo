@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/vite-env.d.ts","./src/components/layout.tsx","./src/components/pageloader.tsx","./src/context/appcontext.tsx","./src/hooks/usesmartpolling.ts","./src/lib/api.ts","./src/pages/adminpage.tsx","./src/pages/landingpage.tsx","./src/pages/leaderboardpage.tsx","./src/pages/predictpage.tsx"],"version":"5.9.3"}

@@ -1,0 +1,28 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ═══════════════════════════════════════════════════════════════
+    // سياسة الأمان الأساسية: منع أي وصول مباشر من تطبيق الويب (العميل)
+    // كل القراءة والكتابة تتم عبر Netlify Functions باستخدام Admin SDK
+    // (يستخدم حساب خدمة Service Account ويتجاوز هذه القواعد)
+    // ═══════════════════════════════════════════════════════════════
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ─── بديل: قواعد أكثر تفصيلاً لكل مجموعة (نفس النتيجة) ───
+    //
+    // match /nominations/{id} {
+    //   allow read, write: if false;
+    // }
+    // match /settings/{id} {
+    //   allow read, write: if false;
+    // }
+    // match /admins/{uid} {
+    //   allow read, write: if false;
+    // }
+  }
+}

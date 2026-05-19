@@ -1,0 +1,20 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "meta": {
+      "lastUpdate": {
+        ".read": true,
+        ".write": false
+      }
+    },
+    "demo": {
+      "meta": {
+        "lastUpdate": {
+          ".read": true,
+          ".write": false
+        }
+      }
+    }
+  }
+}

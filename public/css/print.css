@@ -1,0 +1,149 @@
+.hidden {
+  display: none !important;
+}
+
+/* شاشة المعاينة */
+body.print-page {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, system-ui, sans-serif;
+  background: #fff;
+  color: #111;
+  line-height: 1.45;
+}
+
+.print-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #ddd;
+  background: #f5f5f5;
+}
+
+.print-toolbar .btn-print {
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.print-toolbar .btn-print:hover {
+  background: #1d4ed8;
+}
+
+.print-document {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2rem;
+}
+
+.print-document h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.print-subtitle {
+  text-align: center;
+  color: #444;
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+.print-demo-badge {
+  display: inline-block;
+  margin: 0 auto 1rem;
+  padding: 0.25rem 0.75rem;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.print-winners {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.print-winners h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.winners-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.winners-grid span {
+  display: block;
+  padding: 0.35rem;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.print-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.print-table th,
+.print-table td {
+  border: 1px solid #333;
+  padding: 0.45rem 0.6rem;
+  text-align: center;
+}
+
+.print-table th {
+  background: #eee;
+  font-weight: 600;
+}
+
+.print-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.print-footer {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #555;
+  text-align: center;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body.print-page {
+    background: #fff;
+  }
+
+  .print-document {
+    max-width: none;
+    padding: 0;
+  }
+
+  .print-table th,
+  .print-table td {
+    border-color: #000;
+  }
+
+  @page {
+    margin: 12mm;
+    size: A4;
+  }
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>طباعة النتائج النهائية</title>
+  <link rel="stylesheet" href="/css/print.css" />
+</head>
+<body class="print-page">
+  <div class="no-print print-toolbar">
+    <a href="/ranking.html" class="btn-print" style="background:#6b7280;text-decoration:none;">الترتيب</a>
+    <button type="button" id="print-btn" class="btn-print">طباعة</button>
+  </div>
+
+  <article class="print-document" id="print-document">
+    <h1 id="print-title">النتائج النهائية</h1>
+    <p class="print-subtitle" id="print-subtitle">جاري التحميل…</p>
+    <p id="print-demo-badge" class="print-demo-badge hidden">وضع اختبار — بيانات تجريبية</p>
+
+    <section id="print-winners-section" class="print-winners hidden">
+      <h2>الأشواط الفائزة</h2>
+      <div class="winners-grid" id="winners-grid"></div>
+    </section>
+
+    <table class="print-table" aria-label="ترتيب المتسابقين">
+      <thead>
+        <tr>
+          <th>الترتيب</th>
+          <th>الاسم</th>
+          <th>النقاط</th>
+        </tr>
+      </thead>
+      <tbody id="print-tbody">
+        <tr><td colspan="3">جاري التحميل…</td></tr>
+      </tbody>
+    </table>
+
+    <p class="print-footer" id="print-footer"></p>
+  </article>
+
+  <script type="module" src="/js/print-results.js"></script>
+</body>
+</html>

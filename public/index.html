@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة المسؤول — ترشيحات السباق</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body data-page="admin">
+  <header class="header">
+    <div class="container header-inner">
+      <h1 data-i18n="adminTitle">لوحة المسؤول</h1>
+      <div class="header-actions">
+        <button type="button" id="lang-toggle" class="btn btn-ghost btn-sm" data-i18n="lang">EN</button>
+        <a href="/participant.html" class="btn btn-ghost">صفحة المشارك</a>
+        <button type="button" id="logout-btn" class="btn btn-ghost hidden" data-i18n="logout">تسجيل الخروج</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <section id="login-section" class="card">
+      <h2 data-i18n="login">دخول</h2>
+      <p class="hint">Firebase Authentication فقط — جميع القراءة/الكتابة عبر Netlify Functions.</p>
+      <form id="login-form">
+        <label class="field">
+          <span data-i18n="email">البريد الإلكتروني</span>
+          <input type="email" id="admin-email" required autocomplete="username" />
+        </label>
+        <label class="field">
+          <span data-i18n="password">كلمة المرور</span>
+          <input type="password" id="admin-password" required autocomplete="current-password" />
+        </label>
+        <button type="submit" class="btn btn-primary" data-i18n="login">دخول</button>
+        <p class="hint" style="margin-top: 1rem;">
+          <button type="button" id="forgot-password-btn" class="btn btn-ghost btn-sm">
+            نسيت كلمة المرور؟
+          </button>
+        </p>
+      </form>
+    </section>
+
+    <section id="dashboard-section" class="hidden">
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab-btn active" data-tab="winners" data-i18n="tabWinners">نتائج الأشواط</button>
+        <button type="button" class="tab-btn" data-tab="generate" data-i18n="tabCodes">توليد أكواد</button>
+        <button type="button" class="tab-btn" data-tab="codes" data-i18n="tabManageCodes">إدارة الأكواد</button>
+        <button type="button" class="tab-btn" data-tab="participants" data-i18n="tabParticipants">المشاركون</button>
+      </nav>
+
+      <div id="tab-winners" class="tab-panel card" role="tabpanel">
+        <h2 data-i18n="tabWinners">نتائج الأشواط</h2>
+        <p class="hint">أدخل رقم الفائز لكل شوط (7 أشواط).</p>
+        <p id="winners-saved-meta" class="hint hidden" aria-live="polite"></p>
+        <form id="winners-form" class="winners-grid">
+          <label class="field"><span>الشوط 1</span><input type="number" id="winner-1" required step="1" min="1" max="99" /></label>
+          <label class="field"><span>الشوط 2</span><input type="number" id="winner-2" required step="1" min="1" max="99" /></label>
+          <label class="field"><span>الشوط 3</span><input type="number" id="winner-3" required step="1" min="1" max="99" /></label>
+          <label class="field"><span>الشوط 4</span><input type="number" id="winner-4" required step="1" min="1" max="99" /></label>
+          <label class="field"><span>الشوط 5</span><input type="number" id="winner-5" required step="1" min="1" max="99" /></label>
+          <label class="field"><span>الشوط 6</span><input type="number" id="winner-6" required step="1" min="1" max="99" /></label>
+          <label class="field"><span>الشوط 7</span><input type="number" id="winner-7" required step="1" min="1" max="99" /></label>
+        </form>
+        <button type="button" id="save-winners-btn" class="btn btn-primary">حفظ النتائج وحساب النقاط</button>
+      </div>
+
+      <div id="tab-generate" class="tab-panel card hidden" role="tabpanel">
+        <h2 data-i18n="tabCodes">توليد أكواد</h2>
+        <label class="field">
+          <span>maxUses — عدد الاستخدامات</span>
+          <input type="number" id="max-uses" min="1" max="1000" value="1" required />
+        </label>
+        <button type="button" id="generate-code-btn" class="btn btn-primary">إنشاء كود</button>
+        <div id="generated-code-box" class="generated-code hidden">
+          <span class="generated-code-label">الكود:</span>
+          <code id="generated-code-value"></code>
+        </div>
+      </div>
+
+      <div id="tab-codes" class="tab-panel card hidden" role="tabpanel">
+        <div class="panel-header">
+          <h2 data-i18n="tabManageCodes">إدارة الأكواد</h2>
+          <button type="button" id="refresh-codes-btn" class="btn btn-ghost btn-sm">تحديث</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>الكود</th>
+                <th>maxUses</th>
+                <th>usedCount</th>
+                <th>المتبقي</th>
+                <th>تاريخ الإنشاء</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="codes-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="tab-participants" class="tab-panel card hidden" role="tabpanel">
+        <div class="panel-header">
+          <h2 data-i18n="tabParticipants">المشاركون</h2>
+          <div class="panel-actions">
+            <button type="button" id="export-excel-btn" class="btn btn-ghost btn-sm">📥 تصدير Excel</button>
+            <button type="button" id="refresh-participants-btn" class="btn btn-ghost btn-sm">تحديث</button>
+            <button type="button" id="clear-all-btn" class="btn btn-danger btn-sm">مسح الكل</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-i18n="name">الاسم</th>
+                <th>التوقعات</th>
+                <th data-i18n="score">النقاط</th>
+                <th data-i18n="rank">الترتيب</th>
+              </tr>
+            </thead>
+            <tbody id="participants-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

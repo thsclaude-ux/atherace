@@ -1,0 +1,18 @@
+{
+  "name": "atherace-functions",
+  "description": "Firebase Cloud Functions — wraps Netlify function handlers",
+  "main": "index.js",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.2",
+    "firebase-functions": "^6.3.0",
+    "xlsx-js-style": "^1.2.0"
+  },
+  "private": true
+}

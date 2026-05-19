@@ -1,0 +1,42 @@
+const admin = require("firebase-admin");
+
+let app;
+
+function getAdmin() {
+  if (app) return app;
+
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+  if (!projectId || !clientEmail || !privateKey) {
+    throw new Error(
+      "Missing Firebase Admin env vars: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY"
+    );
+  }
+
+  const databaseURL =
+    process.env.FIREBASE_DATABASE_URL ||
+    `https://${projectId}-default-rtdb.firebaseio.com`;
+
+  app = admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId,
+      clientEmail,
+      privateKey,
+    }),
+    databaseURL,
+  });
+
+  return app;
+}
+
+function rtdb() {
+  return getAdmin().database();
+}
+
+function auth() {
+  return getAdmin().auth();
+}
+
+module.exports = { getAdmin, rtdb, auth };
